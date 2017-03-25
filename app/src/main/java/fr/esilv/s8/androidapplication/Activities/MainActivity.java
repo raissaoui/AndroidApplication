@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                EventBus.getDefault().post(new QueryEvent(query));
 
-                //if you want to collapse the searchview
+                EventBus.getDefault().post(new QueryEvent(query));
                 invalidateOptionsMenu();
 
                 return false;
+
             }
 
             @Override
