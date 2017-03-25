@@ -51,7 +51,7 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
     private void getVideos() {
 
         String query= "eminem";
-                //new QueryEvent().query;
+        //String queryy=new QueryEvent(this.query);//new QueryEvent().query;
         StringRequest videosRequest = new StringRequest(VIDEOS_URL+query, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

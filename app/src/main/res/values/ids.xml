@@ -4,4 +4,6 @@
     <item name="contentFrame" type="id" />
     <item name="mainFragmentButton" type="id" />
     <item name="action_search" type="id" />
+
+    <item name="imageView" type="id" />
 </resources>

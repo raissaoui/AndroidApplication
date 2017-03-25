@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import fr.esilv.s8.androidapplication.Interfaces.OnVideoSelectedListener;
 import fr.esilv.s8.androidapplication.Models.Item;
 import fr.esilv.s8.androidapplication.R;
@@ -25,12 +27,14 @@ public class VideosViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         title = (TextView) itemView.findViewById(R.id.title);
         author = (TextView) itemView.findViewById(R.id.author);
+        thumbnail= (ImageView) itemView.findViewById(R.id.imageView);
     }
 
     public void bind(final Item video) {
         title.setText(video.getSnippet().getChannelTitle());
         author.setText(video.getSnippet().getTitle());
-
+        //Picasso.with(thumbnail.getContext()).load(video.getSnippet().getThumbnails().getHigh().getUrl()).into(thumbnail);
+        Picasso.with(itemView.getContext()).load(video.getSnippet().getThumbnails().getHigh().getUrl()).into(thumbnail);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

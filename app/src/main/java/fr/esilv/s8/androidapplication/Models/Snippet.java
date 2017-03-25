@@ -32,6 +32,7 @@ public class Snippet implements Serializable
     private String liveBroadcastContent;
     private final static long serialVersionUID = 6428967067531440405L;
 
+
     public String getPublishedAt() {
         return publishedAt;
     }
