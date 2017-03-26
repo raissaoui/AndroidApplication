@@ -6,4 +6,5 @@
     <item name="action_search" type="id" />
 
     <item name="imageView" type="id" />
+    <item name="show" type="id" />
 </resources>

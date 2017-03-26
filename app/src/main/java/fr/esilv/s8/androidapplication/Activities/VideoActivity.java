@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import fr.esilv.s8.androidapplication.Adapters.VideosAdapter;
+import fr.esilv.s8.androidapplication.Constant;
 import fr.esilv.s8.androidapplication.Interfaces.OnVideoSelectedListener;
 import fr.esilv.s8.androidapplication.Models.Example;
 import fr.esilv.s8.androidapplication.Models.Item;
@@ -33,6 +34,7 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
     private static final String VIDEOS_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyCzRbBdQ7YsZo2JSMnNE4pIuNnQrS-OaiQ&q=";
     private RecyclerView recyclerView;
     String query="";
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,19 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("search")) {
+            query = intent.getStringExtra("search");
+        }
+
         getVideos();
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         startActivity(intent);
     }
 
     private void getVideos() {
-
-        String query= "eminem";
+        query= "eminem";
         //String queryy=new QueryEvent(this.query);//new QueryEvent().query;
         StringRequest videosRequest = new StringRequest(VIDEOS_URL+query, new Response.Listener<String>() {
             @Override
@@ -72,14 +78,16 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
 
     private void setAdapter(List<Item> items) {
         VideosAdapter adapter = new VideosAdapter(items);
-        //adapter.OnVideoSelectedListener(this);
+        adapter.OnVideoSelectedListener(this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onVideoSelected(Item video) {
+        //Snippet.start(this, video.getSnippet().getTitle(), video.getSnippet().getDescription());
 
     }
+
 
     public void showFragment(View view) {
         view.setVisibility(View.GONE);
@@ -91,8 +99,12 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
         fragmentTransaction.commit();
     }
 
-    /*@Override
-    public void onContractSelected(Contract contract) {
-        StationsActivity.start(this, contract.getName());
-    }*/
+
+    public static void start(SearchActivity searchActivity, Item item) {
+
+            Intent intent = new Intent(searchActivity, VideoActivity.class);
+            intent.putExtra(Constant.ITEM, item);
+            searchActivity.startActivity(intent);
+
+    }
 }

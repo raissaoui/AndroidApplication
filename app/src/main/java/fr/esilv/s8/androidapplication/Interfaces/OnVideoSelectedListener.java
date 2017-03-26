@@ -8,5 +8,6 @@ import fr.esilv.s8.androidapplication.Models.Item;
 
 public interface OnVideoSelectedListener {
     void onVideoSelected(Item video);
+
 }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import fr.esilv.s8.androidapplication.Activities.VideoActivity;
 import fr.esilv.s8.androidapplication.Interfaces.OnVideoSelectedListener;
 import fr.esilv.s8.androidapplication.Models.Item;
 import fr.esilv.s8.androidapplication.R;
@@ -46,4 +47,6 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosViewHolder> {
         this.onVideoSelectedListener = onVideoSelectedListener;
     }
 
+    public void OnVideoSelectedListener(VideoActivity videoActivity) {
+    }
 }
