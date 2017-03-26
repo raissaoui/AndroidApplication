@@ -31,9 +31,7 @@ public class VideosViewHolder extends RecyclerView.ViewHolder{
     }
 
     public void bind(final Item video) {
-        title.setText(video.getSnippet().getChannelTitle());
         author.setText(video.getSnippet().getTitle());
-        //Picasso.with(thumbnail.getContext()).load(video.getSnippet().getThumbnails().getHigh().getUrl()).into(thumbnail);
         Picasso.with(itemView.getContext()).load(video.getSnippet().getThumbnails().getHigh().getUrl()).into(thumbnail);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

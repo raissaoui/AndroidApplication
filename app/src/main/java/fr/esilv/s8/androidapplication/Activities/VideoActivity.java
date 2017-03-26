@@ -8,10 +8,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Response;
@@ -22,6 +26,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import fr.esilv.s8.androidapplication.Adapters.VideosAdapter;
 import fr.esilv.s8.androidapplication.Constant;
 import fr.esilv.s8.androidapplication.Interfaces.OnVideoSelectedListener;
@@ -31,10 +36,13 @@ import fr.esilv.s8.androidapplication.R;
 
 public class VideoActivity extends AppCompatActivity implements OnVideoSelectedListener {
 
+
+
     private static final String VIDEOS_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyCzRbBdQ7YsZo2JSMnNE4pIuNnQrS-OaiQ&q=";
     private RecyclerView recyclerView;
     String query="";
     private Item item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +52,48 @@ public class VideoActivity extends AppCompatActivity implements OnVideoSelectedL
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         if (intent.hasExtra("search")) {
             query = intent.getStringExtra("search");
-        }
+        }*/
 
         getVideos();
 
         //Intent intent = getIntent();
-        startActivity(intent);
+        //startActivity(intent);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        Bundle bundle= new Bundle();
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                EventBus.getDefault().post(new QueryEvent(query));
+                invalidateOptionsMenu();
+
+                return false;
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        return true;
+    }
     private void getVideos() {
-        query= "eminem";
+        //query= "eminem";
         //String queryy=new QueryEvent(this.query);//new QueryEvent().query;
+
         StringRequest videosRequest = new StringRequest(VIDEOS_URL+query, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
